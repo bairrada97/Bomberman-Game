@@ -1,42 +1,36 @@
+import { Player } from "./index";
+import { World } from "./index";
+
 export class Game {
   constructor() {
-    this.left = false;
-    this.right = false;
-    this.up = false;
-    this.down = false;
-    this.player = {
-      color: "#000000",
-      height: 16,
-      jumping: true,
-      speed: 0.3,
-      velocity_x: 0,
-      velocity_y: 0,
-      width: 16,
-      x: 100,
-      y: 50
-    };
-    this.world = {
-      backgroundColor: "#ffffff",
-      height: 72,
-      width: 128
-    };
+    this.player = new Player();
+    this.world = new World();
   }
 
-  move() {
-    if (this.left) {
-      this.player.x -= this.player.speed;
+  collideObject(object) {
+    if (object.x < 0) {
+      object.x = 0;
+      object.velocityX = 0;
+    } else if (object.x + object.width > this.world.width) {
+      object.x = this.world.width - object.width;
+      object.velocityX = 0;
     }
-    if (this.right) {
-      this.player.x += this.player.speed;
-    }
-    if (this.up) {
-      this.player.y -= this.player.speed;
-    }
-    if (this.down) {
-      this.player.y += this.player.speed;
+    if (object.y < 0) {
+      object.y = 0;
+      object.velocityY = 0;
+    } else if (object.y + object.height > this.world.height) {
+      object.jumping = false;
+      object.y = this.world.height - object.height;
+      object.velocityY = 0;
     }
   }
+
   update() {
-    this.move();
+    this.player.velocityY += this.world.gravity;
+
+    this.player.update();
+    this.player.velocityX *= this.world.friction;
+    this.player.velocityY *= this.world.friction;
+    this.collideObject(this.player);
   }
 }

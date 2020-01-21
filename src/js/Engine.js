@@ -17,29 +17,29 @@ export class Engine {
     already be requested before 30 or 60 frames pass and I miss a request entirely.
     This could cause a "spiral of death" for my CPU, but since I have the frame dropping
     safety if statement, this probably won't crash the user's computer. */
-    this.animation_frame_request = window.requestAnimationFrame(() => this.handleRun(this.time_step));
-    this.update(this.time_step);
-    this.render(this.time_step);
-    // this.accumulated_time += time_stamp - this.time;
-    // this.time = time_stamp;
+    this.animation_frame_request = window.requestAnimationFrame(time_stamp => this.handleRun(time_stamp));
+    // this.update(this.time_step);
+    // this.render(this.time_step);
+    this.accumulated_time += time_stamp - this.time;
+    this.time = time_stamp;
 
-    // /* This is the safety if statement. */
-    // if (this.accumulated_time >= this.time_step * 3) {
-    //   this.accumulated_time = this.time_step;
-    // }
+    /* This is the safety if statement. */
+    if (this.accumulated_time >= this.time_step * 3) {
+      this.accumulated_time = this.time_step;
+    }
 
-    // while (this.accumulated_time >= this.time_step) {
-    //   this.accumulated_time -= this.time_step;
+    while (this.accumulated_time >= this.time_step) {
+      this.accumulated_time -= this.time_step;
 
-    //   this.update(time_stamp);
+      this.update(time_stamp);
 
-    //   this.updated = true;
-    // }
+      this.updated = true;
+    }
 
-    // if (this.updated) {
-    //   this.updated = false;
-    //   this.render(time_stamp);
-    // }
+    if (this.updated) {
+      this.updated = false;
+      this.render(time_stamp);
+    }
   }
 
   handleRun(time_step) {
@@ -49,7 +49,7 @@ export class Engine {
   start() {
     this.accumulated_time = this.time_step;
     this.time = window.performance.now();
-    this.animation_frame_request = window.requestAnimationFrame(() => this.handleRun(this.time_step));
+    this.animation_frame_request = window.requestAnimationFrame(time_stamp => this.handleRun(time_stamp));
   }
 
   stop() {

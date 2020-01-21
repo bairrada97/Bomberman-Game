@@ -23,10 +23,11 @@ export class Display {
 
   drawRectangle(x, y, width, height, color) {
     this.buffer.fillStyle = color;
-    this.buffer.fillRect(Math.floor(x), Math.floor(y), width, height, color);
+    this.buffer.fillRect(Math.floor(x), Math.floor(y), width, height);
   }
 
   render() {
+    this.context.clearRect(0, 0, this.context.width, this.context.height);
     this.context.imageSmoothingEnabled = false;
     this.context.drawImage(this.buffer.canvas, 0, 0, this.buffer.canvas.width, this.buffer.canvas.height, 0, 0, this.context.canvas.width, this.context.canvas.height);
   }

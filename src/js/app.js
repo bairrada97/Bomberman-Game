@@ -8,13 +8,13 @@ import { Engine } from "./index";
 const App = (() => {
   const $Module = document.querySelector(".app");
   let display;
-  let controler;
+  let controller;
   let game;
   let engine;
 
   const init = () => {
-    display = new Display(document.querySelector("canvas"));
-    controler = new Controller();
+    display = new Display($Module.querySelector("canvas"));
+    controller = new Controller();
     game = new Game();
     engine = new Engine(1000 / 30, render, update);
     events();
@@ -24,27 +24,28 @@ const App = (() => {
     display.buffer.canvas.width = game.world.width;
   };
   const events = () => {
-    document.addEventListener("keydown", ({ keyCode }) => {
-      if (keyCode == 37) game.left = true;
-      if (keyCode == 39) game.right = true;
-      if (keyCode == 38) game.up = true;
-      if (keyCode == 40) game.down = true;
-    });
-    document.addEventListener("keyup", ({ keyCode }) => {
-      if (keyCode == 37) game.left = false;
-      if (keyCode == 39) game.right = false;
-      if (keyCode == 38) game.up = false;
-      if (keyCode == 40) game.down = false;
-    });
+    document.addEventListener("keydown", ({ keyCode, type }) => controller.keyListener({ keyCode, type }));
+    document.addEventListener("keyup", ({ keyCode, type }) => controller.keyListener({ keyCode, type }));
   };
 
   const render = () => {
     display.fill(game.world.backgroundColor);
     display.drawRectangle(game.player.x, game.player.y, game.player.width, game.player.height, game.player.color);
+    display.drawRectangle(30, 56, game.player.width, game.player.height, game.player.color);
     display.render();
   };
 
   const update = () => {
+    if (controller.left) {
+      game.player.moveLeft();
+    }
+    if (controller.right) {
+      game.player.moveRight();
+    }
+    if (controller.up) {
+      game.player.moveUp();
+      controller.up = false;
+    }
     game.update();
   };
 

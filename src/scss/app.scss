@@ -10,6 +10,8 @@
 /* Mixins, helpers and functions */
 @import "base/mixins";
 
-
-
-.app{}
+.app {
+  canvas {
+    image-rendering: pixelated;
+  }
+}
