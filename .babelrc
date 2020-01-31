@@ -1,4 +1,4 @@
 {
-  "presets": [["@babel/preset-env"]],
-  "plugins": ["@babel/plugin-transform-classes", "@babel/syntax-dynamic-import"]
+  "presets": [["@babel/env", { "targets": ["last 2 versions"] }]],
+  "plugins": ["@babel/plugin-transform-classes", "@babel/syntax-dynamic-import", "@babel/proposal-optional-chaining", "@babel/proposal-nullish-coalescing-operator"]
 }

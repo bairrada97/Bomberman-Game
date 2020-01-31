@@ -5,6 +5,5 @@ export class World {
     this.width = 128;
     this.friction = 0.9;
     this.gravity = 3;
-    this.bounceFactor = 0.8;
   }
 }

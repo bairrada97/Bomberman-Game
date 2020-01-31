@@ -8,12 +8,14 @@ export class Player {
     this.width = 16;
     this.x = 100;
     this.y = 50;
+    this.centerX = this.x + this.width * 0.5;
+    this.centerY = this.y + this.height * 0.5;
   }
   moveLeft() {
-    this.velocityX -= 1;
+    this.velocityX -= 0.55;
   }
   moveRight() {
-    this.velocityX += 1;
+    this.velocityX += 0.55;
   }
   moveUp() {
     if (!this.jumping) {

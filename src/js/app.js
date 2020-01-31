@@ -5,6 +5,8 @@ import { Controller } from "./index";
 import { Game } from "./index";
 import { Engine } from "./index";
 
+import LocomotiveScroll from "locomotive-scroll";
+
 const App = (() => {
   const $Module = document.querySelector(".app");
   let display;
@@ -31,7 +33,7 @@ const App = (() => {
   const render = () => {
     display.fill(game.world.backgroundColor);
     display.drawRectangle(game.player.x, game.player.y, game.player.width, game.player.height, game.player.color);
-    display.drawRectangle(30, 56, game.player.width, game.player.height, game.player.color);
+    display.drawRectangle(game.enemy.x, game.enemy.y, game.enemy.width, game.enemy.height, game.enemy.color);
     display.render();
   };
 
